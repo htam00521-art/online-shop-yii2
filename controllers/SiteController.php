@@ -21,8 +21,8 @@ class SiteController extends Controller
     public function __construct(
         $id,
         $module,
-        private readonly MailerInterface $mailer,
-        private readonly Security $security,
+        private  MailerInterface $mailer,
+        private  Security $security,
         $config = [],
     ) {
         parent::__construct($id, $module, $config);
