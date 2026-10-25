@@ -1,0 +1,76 @@
+/* ===== Giao diện cửa hàng sách - dùng chung cho các trang giỏ hàng ===== */
+/* Mọi class đều có tiền tố "shop-" để không đụng CSS của nhóm. */
+
+:root {
+  --shop-ink: #12302b;
+  --shop-muted: #5c726d;
+  --shop-line: #dde7e4;
+  --shop-bg: #eef3f1;
+  --shop-surface: #ffffff;
+  --shop-primary: #0f766e;
+  --shop-primary-dark: #0b5a54;
+  --shop-money: #b45309;
+  --shop-money-soft: #fef3c7;
+  --shop-danger: #c62828;
+  --shop-danger-soft: #fdecec;
+  --shop-ok-soft: #dff5ec;
+}
+
+.shop-page { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; color: var(--shop-ink); }
+
+.shop-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.shop-title { margin: 0; font-size: 1.6rem; font-weight: 700; }
+.shop-sub { margin: 4px 0 0; color: var(--shop-muted); }
+.shop-back { display: inline-block; margin-bottom: 8px; color: var(--shop-primary); text-decoration: none; font-weight: 600; }
+.shop-back:hover { text-decoration: underline; }
+
+/* ----- Thông báo (flash) ----- */
+.shop-alert { padding: 12px 16px; border-radius: 12px; margin-bottom: 16px; font-weight: 500; }
+.shop-alert--success { background: var(--shop-ok-soft); color: #0b5a3e; }
+.shop-alert--error { background: var(--shop-danger-soft); color: var(--shop-danger); }
+
+/* ----- Khung nội dung ----- */
+.shop-card { background: var(--shop-surface); border: 1px solid var(--shop-line); border-radius: 18px; padding: 22px; box-shadow: 0 6px 22px rgba(15, 118, 110, .07); }
+.shop-card__title { margin: 0 0 14px; font-size: 1.1rem; font-weight: 700; }
+
+.shop-layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start; }
+@media (max-width: 860px) { .shop-layout { grid-template-columns: 1fr; } }
+
+/* ----- Ô thống kê ----- */
+.shop-stats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.shop-stat { background: var(--shop-bg); border-radius: 12px; padding: 10px 18px; min-width: 130px; }
+.shop-stat__label { display: block; font-size: .8rem; color: var(--shop-muted); }
+.shop-stat__value { font-size: 1.3rem; font-weight: 700; }
+
+/* ----- Bảng ----- */
+.shop-table-wrap { overflow-x: auto; }
+.shop-table { width: 100%; border-collapse: collapse; min-width: 520px; }
+.shop-table th { text-align: left; font-size: .85rem; font-weight: 600; color: var(--shop-muted); padding: 10px 12px; border-bottom: 2px solid var(--shop-line); }
+.shop-table td { padding: 14px 12px; border-bottom: 1px solid var(--shop-line); vertical-align: middle; }
+.shop-table tbody tr:hover { background: #f7fbfa; }
+.shop-table tfoot td, .shop-table tfoot th { padding: 14px 12px; border-bottom: none; }
+.shop-num { text-align: right; }
+.shop-center { text-align: center; }
+.shop-book { font-weight: 600; }
+.shop-author { display: block; font-size: .85rem; color: var(--shop-muted); }
+.shop-money { color: var(--shop-money); font-weight: 600; white-space: nowrap; }
+.shop-total { font-size: 1.3rem; font-weight: 700; color: var(--shop-money); }
+.shop-code { background: var(--shop-money-soft); color: var(--shop-money); padding: 2px 10px; border-radius: 8px; font-weight: 600; font-size: .9rem; }
+
+/* ----- Nút ----- */
+.shop-btn { display: inline-block; font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; border: 1px solid transparent; border-radius: 12px; padding: 9px 18px; transition: background .15s; }
+.shop-btn--primary { background: var(--shop-primary); color: #fff; }
+.shop-btn--primary:hover { background: var(--shop-primary-dark); color: #fff; }
+.shop-btn--ghost { background: transparent; border-color: var(--shop-line); color: var(--shop-ink); }
+.shop-btn--ghost:hover { background: var(--shop-bg); }
+.shop-btn--block { width: 100%; text-align: center; }
+.shop-btn:focus-visible, .shop-input:focus-visible { outline: 3px solid #5eead4; outline-offset: 2px; }
+
+/* ----- Form thêm sách ----- */
+.shop-field { margin-bottom: 14px; }
+.shop-label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: 6px; }
+.shop-input { width: 100%; font: inherit; padding: 10px 12px; border: 1px solid var(--shop-line); border-radius: 10px; background: #fff; color: var(--shop-ink); }
+.shop-hint { display: block; margin-top: 4px; font-size: .8rem; color: var(--shop-muted); }
+
+/* ----- Trạng thái trống ----- */
+.shop-empty { text-align: center; color: var(--shop-muted); padding: 28px 8px; }
