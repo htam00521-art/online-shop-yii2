@@ -96,7 +96,7 @@ $tongSoLuong = array_sum(array_column($rows, 'quantity'));
                 // Tạo danh sách lựa chọn: [id sách => "Tên sách - giá"]
                 $options = [];
                 foreach ($books as $b) {
-                    $options[$b->id] = $b->title . ' — ' . number_format((float) $b->price, 0, ',', '.') . 'đ (còn ' . (int) $b->stock . ')';
+                    $options[$b->id] = $b->title . ' (còn ' . (int) $b->stock . ')';
                 }
                 ?>
                 <!-- Action "add-item" chỉ nhận POST; Html::beginForm tự gắn mã CSRF -->
