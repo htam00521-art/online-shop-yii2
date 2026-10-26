@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var app\models\Cart $cart */
-/** @var array $rows   mỗi phần tử: ['book' => Book, 'quantity' => int, 'subtotal' => float] */
+/** @var array $rows   mỗi phần tử: ['item_id' => int, 'book' => Book, 'quantity' => int, 'subtotal' => float] */
 /** @var float $total */
 /** @var app\models\Book[] $books  các sách còn hàng (stock > 0) */
 
@@ -31,6 +31,14 @@ $tongSoLuong = array_sum(array_column($rows, 'quantity'));
                 Tạo lúc <?= $formatter->asDatetime($cart->created_at, 'php:d/m/Y H:i') ?>
             </p>
         </div>
+
+        <!-- Nút XÓA CẢ GIỎ: gửi POST tới CartDeleteController::actionDeleteCart($id), $id = mã giỏ -->
+        <?= Html::beginForm(['/cart-delete/delete-cart', 'id' => $cart->id], 'post', ['class' => 'shop-inline-form']) ?>
+            <?= Html::submitButton('Xóa giỏ hàng', [
+                'class' => 'shop-btn shop-btn--danger',
+                'data-confirm' => 'Xóa toàn bộ giỏ hàng #' . $cart->id . '? Không thể hoàn tác.',
+            ]) ?>
+        <?= Html::endForm() ?>
     </div>
 
     <div class="shop-layout">
@@ -59,10 +67,12 @@ $tongSoLuong = array_sum(array_column($rows, 'quantity'));
                                 <th class="shop-num">Đơn giá</th>
                                 <th class="shop-center">Số lượng</th>
                                 <th class="shop-num">Thành tiền</th>
+                                <th class="shop-num">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
                         <?php foreach ($rows as $row): ?>
+                            <?php $itemId = $row['item_id'] ?? null; // mã dòng trong bảng cart_items ?>
                             <tr>
                                 <td>
                                     <span class="shop-book"><?= Html::encode($row['book']->title) ?></span>
@@ -71,6 +81,20 @@ $tongSoLuong = array_sum(array_column($rows, 'quantity'));
                                 <td class="shop-num shop-money"><?= number_format((float) $row['book']->price, 0, ',', '.') ?>đ</td>
                                 <td class="shop-center"><?= (int) $row['quantity'] ?></td>
                                 <td class="shop-num shop-money"><?= number_format((float) $row['subtotal'], 0, ',', '.') ?>đ</td>
+                                <td class="shop-num shop-actions">
+                                    <?php if ($itemId !== null): ?>
+                                        <!-- SỬA: mở form sửa số lượng của CartController::actionUpdate($id), $id = mã dòng cart_items -->
+                                        <?= Html::a('Sửa', ['/cart/update', 'id' => $itemId], ['class' => 'shop-btn shop-btn--ghost shop-btn--sm']) ?>
+
+                                        <!-- XÓA 1 SÁCH: gửi POST tới CartDeleteController::actionRemoveItem($id) -->
+                                        <?= Html::beginForm(['/cart-delete/remove-item', 'id' => $itemId], 'post', ['class' => 'shop-inline-form']) ?>
+                                            <?= Html::submitButton('Xóa', [
+                                                'class' => 'shop-btn shop-btn--danger shop-btn--sm',
+                                                'data-confirm' => 'Xóa "' . $row['book']->title . '" khỏi giỏ hàng?',
+                                            ]) ?>
+                                        <?= Html::endForm() ?>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -78,6 +102,7 @@ $tongSoLuong = array_sum(array_column($rows, 'quantity'));
                             <tr>
                                 <th colspan="3" class="shop-num">Tổng cộng</th>
                                 <td class="shop-num shop-total"><?= number_format((float) $total, 0, ',', '.') ?>đ</td>
+                                <td></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -93,13 +118,12 @@ $tongSoLuong = array_sum(array_column($rows, 'quantity'));
                 <p class="shop-empty">Hiện không còn sách nào trong kho.</p>
             <?php else: ?>
                 <?php
-                // Tạo danh sách lựa chọn: [id sách => "Tên sách - giá"]
+                // Danh sách lựa chọn: [id sách => "Tên sách (còn N)"]
                 $options = [];
                 foreach ($books as $b) {
                     $options[$b->id] = $b->title . ' (còn ' . (int) $b->stock . ')';
                 }
                 ?>
-                <!-- Action "add-item" chỉ nhận POST; Html::beginForm tự gắn mã CSRF -->
                 <?= Html::beginForm(['add-item', 'id' => $cart->id], 'post') ?>
                     <div class="shop-field">
                         <label class="shop-label" for="book_id">Chọn sách</label>
