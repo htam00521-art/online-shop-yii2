@@ -1,10 +1,10 @@
 # Bảng kiểm thử CRUD giỏ hàng
 
 - **Dự án:** online-shop-yii2 (Yii2, MySQL `online_shop`)
-- **Người kiểm thử:** (ghi tên bạn)
+- **Người kiểm thử:** (Du Kiệt)
 - **Ngày kiểm thử:** 26/10/2026
 - **Môi trường:** Windows, XAMPP (MySQL), PHP 8.2.12, chạy bằng `php yii serve`, trình duyệt Cốc Cốc
-- **Nhánh:** `feature/giao-dien-kiem-thu` (đã gộp `feature/delete` và `feature/update`)
+- **Nhánh:** `feature/giao-dien-kiem-thu` 
 - **Cách điền:** thao tác thật trên trình duyệt rồi ghi vào cột "Kết quả thực tế". Cột "Đạt/Lỗi" ghi `Đạt` hoặc `Lỗi`. Mỗi dòng `Lỗi` phải có một Issue trên GitHub (ghi số Issue ở cột cuối).
 - **Lưu ý khi thử Xóa:** dùng giỏ do chính mình tạo, không xóa giỏ #1 và 3 sách mẫu.
 

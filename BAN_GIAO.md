@@ -1,7 +1,7 @@
 # Tài liệu bàn giao: bước 7 (giao diện và kiểm thử)
 
 Tài liệu này giúp người tiếp theo chạy được dự án, biết file nào của ai, và biết còn việc gì.
-Ô `[ ]` là việc cần tích sau khi làm xong. Chỗ `#?` là số Issue cần điền.
+Ô `[x]` là việc cần tích sau khi làm xong. Chỗ `#?` là số Issue cần điền.
 
 ## 1. Dự án
 
