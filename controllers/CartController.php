@@ -59,9 +59,9 @@ public function actionUpdate($id)
         if ($this->request->isPost && $model->load($this->request->post())) {
             // 4. Chỉ cho phép sửa giỏ hàng chưa duyệt
             $cart = Cart::findOne($model->cart_id);
-            if ($cart && $cart->status !== 'pending') { // Sửa 'pending' thành trạng thái chưa duyệt trong DB của bạn
+            if ($cart && $cart->hasAttribute('status') && $cart->status !== 'pending') { // Sửa 'pending' thành trạng thái chưa duyệt trong DB của bạn
                 Yii::$app->session->setFlash('error', 'Chỉ được phép sửa giỏ hàng chưa duyệt.');
-                return $this->redirect(['index']);
+                return $this->redirect(['/cart-create/view', 'id' => $model->cart_id]);
             }
 
             // 3. Kiểm tra số lượng hợp lệ và tồn kho
@@ -77,7 +77,7 @@ public function actionUpdate($id)
                     
                     if ($model->save()) {
                         Yii::$app->session->setFlash('success', 'Cập nhật số lượng thành công.');
-                        return $this->redirect(['index']);
+                        return $this->redirect(['/cart-create/view', 'id' => $model->cart_id]);
                     }
                 }
             }

@@ -88,7 +88,7 @@ class CartDeleteController extends Controller
             );
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/cart-create/view', 'id' => $cartId]);
     }
 
     // Xoa toan bo gio hang
@@ -130,6 +130,6 @@ class CartDeleteController extends Controller
             );
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/cart-create/index']);
     }
 }

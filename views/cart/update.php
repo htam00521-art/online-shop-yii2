@@ -23,7 +23,7 @@ $this->title = 'Cập nhật số lượng sách';
 
         <div class="form-group">
             <?= Html::submitButton('Lưu thay đổi', ['class' => 'btn btn-success']) ?>
-            <?= Html::a('Quay lại', ['index'], ['class' => 'btn btn-default btn-secondary']) ?>
+            <?= Html::a('Quay lại', ['/cart-create/view', 'id' => $model->cart_id], ['class' => 'btn btn-default btn-secondary']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
