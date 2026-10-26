@@ -74,3 +74,11 @@
 
 /* ----- Trạng thái trống ----- */
 .shop-empty { text-align: center; color: var(--shop-muted); padding: 28px 8px; }
+/* ----- Nút Sửa / Xóa ----- */
+.shop-btn--sm { padding: 6px 12px; font-size: .85rem; border-radius: 10px; }
+.shop-btn--danger { background: var(--shop-danger); color: #fff; }
+.shop-btn--danger:hover { background: #a61f1f; }
+.shop-inline-form { display: inline-block; margin: 0; }
+.shop-actions { white-space: nowrap; }
+.shop-actions .shop-btn + .shop-inline-form { margin-left: 6px; }
+.shop-table { min-width: 600px; }
