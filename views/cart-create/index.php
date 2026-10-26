@@ -1,41 +1,63 @@
 <?php
-/** @var yii\web\View $this */
-/** @var app\models\Cart[] $carts */
 
 use yii\helpers\Html;
 
-$this->title = 'Giỏ hàng';
-?>
-<div class="cart-index">
-    <h1><?= Html::encode($this->title) ?></h1>
+/** @var yii\web\View $this */
+/** @var app\models\Cart[] $carts */
 
-    <?php foreach (['success', 'error'] as $type): ?>
-        <?php if (Yii::$app->session->hasFlash($type)): ?>
-            <div class="alert alert-<?= $type === 'error' ? 'danger' : 'success' ?>">
-                <?= Html::encode(Yii::$app->session->getFlash($type)) ?>
-            </div>
-        <?php endif; ?>
+$this->title = 'Danh sách giỏ hàng';
+$this->registerCssFile('@web/css/shop.css');
+
+$formatter = Yii::$app->formatter;
+?>
+<div class="shop-page">
+
+    <?php foreach (Yii::$app->session->getAllFlashes(true) as $type => $message): ?>
+        <div class="shop-alert shop-alert--<?= $type === 'success' ? 'success' : 'error' ?>">
+            <?= Html::encode($message) ?>
+        </div>
     <?php endforeach; ?>
 
-    <?= Html::beginForm(['cart-create/create'], 'post') ?>
-        <?= Html::submitButton('Tạo giỏ hàng mới', ['class' => 'btn btn-primary']) ?>
-    <?= Html::endForm() ?>
+    <div class="shop-head">
+        <div>
+            <h1 class="shop-title"><?= Html::encode($this->title) ?></h1>
+            <p class="shop-sub">Chọn một giỏ để xem và thêm sách, hoặc tạo giỏ mới.</p>
+        </div>
 
-    <table class="table table-striped mt-3">
-        <thead>
-            <tr><th>Mã giỏ</th><th>Ngày tạo</th><th></th></tr>
-        </thead>
-        <tbody>
+        <!-- Action "create" chỉ nhận POST nên phải dùng form, không dùng thẻ <a> -->
+        <?= Html::beginForm(['create'], 'post') ?>
+            <?= Html::submitButton('+ Tạo giỏ hàng mới', ['class' => 'shop-btn shop-btn--primary']) ?>
+        <?= Html::endForm() ?>
+    </div>
+
+    <div class="shop-card">
         <?php if (empty($carts)): ?>
-            <tr><td colspan="3">Chưa có giỏ hàng nào. Bấm "Tạo giỏ hàng mới" để bắt đầu.</td></tr>
+            <p class="shop-empty">Chưa có giỏ hàng nào. Nhấn “Tạo giỏ hàng mới” để bắt đầu.</p>
+        <?php else: ?>
+            <div class="shop-table-wrap">
+                <table class="shop-table">
+                    <thead>
+                        <tr>
+                            <th>Mã giỏ</th>
+                            <th>Ngày tạo</th>
+                            <th>Cập nhật lần cuối</th>
+                            <th class="shop-num">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($carts as $cart): ?>
+                        <tr>
+                            <td><span class="shop-code">#<?= (int) $cart->id ?></span></td>
+                            <td><?= $formatter->asDatetime($cart->created_at, 'php:d/m/Y H:i') ?></td>
+                            <td><?= $formatter->asDatetime($cart->updated_at, 'php:d/m/Y H:i') ?></td>
+                            <td class="shop-num">
+                                <?= Html::a('Xem giỏ', ['view', 'id' => $cart->id], ['class' => 'shop-btn shop-btn--ghost']) ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         <?php endif; ?>
-        <?php foreach ($carts as $cart): ?>
-            <tr>
-                <td>#<?= $cart->id ?></td>
-                <td><?= date('d/m/Y H:i', $cart->created_at) ?></td>
-                <td><?= Html::a('Xem giỏ', ['cart-create/view', 'id' => $cart->id], ['class' => 'btn btn-sm btn-outline-primary']) ?></td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+    </div>
 </div>

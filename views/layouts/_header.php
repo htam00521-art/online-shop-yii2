@@ -19,6 +19,8 @@ $items = [
     ],
     [
         'label' => 'Contact',
+           ['label' => 'Giỏ hàng', 'url' => ['/cart-create/index']],
+           ['label' => 'Sách', 'url' => ['/book/index']],
         'url' => ['/site/contact'],
     ],
     [

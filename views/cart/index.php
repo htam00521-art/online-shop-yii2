@@ -63,10 +63,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
 
-            // Cột nút thao tác (chỉ giữ nút Xem chi tiết)
+            // Cột nút thao tác
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}',
+                'template' => '{view} {update}',
             ],
         ],
     ]); ?>

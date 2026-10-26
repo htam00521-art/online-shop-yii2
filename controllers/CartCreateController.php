@@ -68,7 +68,7 @@ class CartCreateController extends Controller
             }
             $subtotal = $book->price * $item->quantity;
             $total += $subtotal;
-            $rows[] = ['book' => $book, 'quantity' => $item->quantity, 'subtotal' => $subtotal];
+            $rows[] = ['item_id' => $item->id, 'book' => $book, 'quantity' => $item->quantity, 'subtotal' => $subtotal];
         }
 
         return $this->render('view', [
