@@ -130,6 +130,6 @@ class CartDeleteController extends Controller
             );
         }
 
-        return $this->redirect(['/cart-create/index']);
+        return $this->redirect(['/cart-create/index']); 
     }
 }
